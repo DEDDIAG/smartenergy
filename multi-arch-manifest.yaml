@@ -1,0 +1,7 @@
+image: deddiag/smartenergy:latest
+manifests:
+  - image: deddiag/smartenergy:latest-arm32v7
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7

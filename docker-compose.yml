@@ -3,7 +3,7 @@ services:
   smartenergy:
     build:
         context: .
-        dockerfile: Dockerfile.x86_64
+        dockerfile: Dockerfile
     image: esh:latest
     restart: on-failure
     tmpfs: /run/lock
