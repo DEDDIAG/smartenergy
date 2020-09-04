@@ -1,0 +1,33 @@
+version: '2'
+services:
+  smartenergy:
+    build:
+        context: .
+        dockerfile: Dockerfile.x86_64
+    image: esh:latest
+    restart: on-failure
+    tmpfs: /run/lock
+    privileged: true
+    volumes:
+        - ./dev/jdbc.ypersist:/opt/smartenergy/conf/persistence/jdbc.ypersist
+        - ./dev/jdbc.cfg:/opt/smartenergy/conf/services/jdbc.cfg
+        - ./dev/addons/:/opt/smartenergy/addons/
+    network_mode: "host"
+
+  postgres:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_PASSWORD=password
+    restart: on-failure
+    networks:
+        lvsbr:
+          ipv4_address: 172.20.0.2
+
+networks:    
+  lvsbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.20.0.0/24
+         gateway: 172.20.0.1
+
